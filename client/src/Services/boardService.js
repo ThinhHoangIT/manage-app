@@ -9,6 +9,7 @@ import {
 import { openAlert } from "../Redux/Slices/alertSlice";
 import {
   addMembers,
+  removeMember,
   setActivityLoading,
   updateActivity,
   updateBackground,
@@ -17,6 +18,7 @@ import {
 
 const listRoute = "http://localhost:3001/list";
 const boardRoute = "http://localhost:3001/board";
+let submitCall = Promise.resolve();
 
 export const getLists = async (boardId, dispatch) => {
   dispatch(setLoading(true));
@@ -188,6 +190,29 @@ export const boardMemberAdd = async (boardId, members, dispatch) => {
   }
 };
 
-export const boardMemberRemove = () => {
-  //
+export const boardMemberRemove = async (boardId, memberId, dispatch) => {
+  try {
+    dispatch(removeMember({ memberId }));
+    submitCall = submitCall.then(() =>
+      axios.delete(
+        boardRoute + "/" + boardId + "/" + memberId + "/remove-member"
+      )
+    );
+    await submitCall;
+    dispatch(
+      openAlert({
+        message: "Members are removed to this board successfully",
+        severity: "success",
+      })
+    );
+  } catch (error) {
+    dispatch(
+      openAlert({
+        message: error?.response?.data?.errMessage
+          ? error.response.data.errMessage
+          : error.message,
+        severity: "error",
+      })
+    );
+  }
 };

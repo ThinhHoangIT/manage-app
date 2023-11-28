@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
+import { boardMemberRemove } from "../../../../../Services/boardService";
+import { openAlert } from "../../../../../Redux/Slices/alertSlice";
 const Container = styled.div`
   width: 100%;
   height: fit-content;
@@ -52,6 +54,21 @@ export const IconWrapper = styled.div`
 const MemberName = styled.div``;
 
 const MemberInBoard = (props) => {
+  const dispatch = useDispatch();
+  const boardId = useSelector((state) => state.board.id);
+
+  const handleClick = async () => {
+    if (props.role === "owner") {
+      dispatch(
+        openAlert({
+          message: "Can not remove owner of board",
+          severity: "warning",
+        })
+      );
+      return;
+    }
+    await boardMemberRemove(boardId, props.user, dispatch);
+  };
   return (
     <MemberInBoardWrapper>
       <Avatar
@@ -66,7 +83,7 @@ const MemberInBoard = (props) => {
         {props.name[0].toUpperCase()}
       </Avatar>
       <MemberName>{props.name}</MemberName>
-      <IconWrapper>
+      <IconWrapper onClick={handleClick}>
         <DeleteForeverOutlinedIcon fontSize="1rem" />
       </IconWrapper>
     </MemberInBoardWrapper>
