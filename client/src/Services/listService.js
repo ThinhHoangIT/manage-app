@@ -6,7 +6,7 @@ import {
   deleteCard,
 } from "../Redux/Slices/listSlice";
 
-const baseUrl = "http://localhost:3001/card";
+const baseUrl = "https://trello.cyclic.app/card";
 
 export const createCard = async (title, listId, boardId, dispatch) => {
   dispatch(setLoading(true));

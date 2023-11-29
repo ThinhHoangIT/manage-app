@@ -16,8 +16,8 @@ import {
   updateDescription,
 } from "../Redux/Slices/boardSlice";
 
-const listRoute = "http://localhost:3001/list";
-const boardRoute = "http://localhost:3001/board";
+const listRoute = "https://trello.cyclic.app/list";
+const boardRoute = "https://trello.cyclic.app/board";
 let submitCall = Promise.resolve();
 
 export const getLists = async (boardId, dispatch) => {
