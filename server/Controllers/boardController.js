@@ -25,12 +25,10 @@ const getById = async (req, res) => {
   // Validate whether params.id is in the user's boards or not
   const validate = req.user.boards.filter((board) => board === req.params.id);
   if (!validate)
-    return res
-      .status(400)
-      .send({
-        errMessage:
-          "You can not show the this board, you are not a member or owner!",
-      });
+    return res.status(400).send({
+      errMessage:
+        "You can not show the this board, you are not a member or owner!",
+    });
 
   // Call the service
   await boardService.getById(req.params.id, (err, result) => {
@@ -43,12 +41,10 @@ const getActivityById = async (req, res) => {
   // Validate whether params.id is in the user's boards or not
   const validate = req.user.boards.filter((board) => board === req.params.id);
   if (!validate)
-    return res
-      .status(400)
-      .send({
-        errMessage:
-          "You can not show the this board, you are not a member or owner!",
-      });
+    return res.status(400).send({
+      errMessage:
+        "You can not show the this board, you are not a member or owner!",
+    });
 
   // Call the service
   await boardService.getActivityById(req.params.id, (err, result) => {
@@ -61,12 +57,10 @@ const updateBoardTitle = async (req, res) => {
   // Validate whether params.id is in the user's boards or not
   const validate = req.user.boards.filter((board) => board === req.params.id);
   if (!validate)
-    return res
-      .status(400)
-      .send({
-        errMessage:
-          "You can not change title of this board, you are not a member or owner!",
-      });
+    return res.status(400).send({
+      errMessage:
+        "You can not change title of this board, you are not a member or owner!",
+    });
   const { boardId } = req.params;
   const { title } = req.body;
   // Call the service
@@ -85,12 +79,10 @@ const updateBoardDescription = async (req, res) => {
   // Validate whether params.id is in the user's boards or not
   const validate = req.user.boards.filter((board) => board === req.params.id);
   if (!validate)
-    return res
-      .status(400)
-      .send({
-        errMessage:
-          "You can not change description of this board, you are not a member or owner!",
-      });
+    return res.status(400).send({
+      errMessage:
+        "You can not change description of this board, you are not a member or owner!",
+    });
   const { boardId } = req.params;
   const { description } = req.body;
   // Call the service
@@ -109,12 +101,10 @@ const updateBackground = async (req, res) => {
   // Validate whether params.id is in the user's boards or not
   const validate = req.user.boards.filter((board) => board === req.params.id);
   if (!validate)
-    return res
-      .status(400)
-      .send({
-        errMessage:
-          "You can not change background of this board, you are not a member or owner!",
-      });
+    return res.status(400).send({
+      errMessage:
+        "You can not change background of this board, you are not a member or owner!",
+    });
   const { boardId } = req.params;
   const { background, isImage } = req.body;
   // Call the service
@@ -134,12 +124,10 @@ const addMember = async (req, res) => {
   // Validate whether params.id is in the user's boards or not
   const validate = req.user.boards.filter((board) => board === req.params.id);
   if (!validate)
-    return res
-      .status(400)
-      .send({
-        errMessage:
-          "You can not add member to this board, you are not a member or owner!",
-      });
+    return res.status(400).send({
+      errMessage:
+        "You can not add member to this board, you are not a member or owner!",
+    });
   const { boardId } = req.params;
   const { members } = req.body;
   // Call the service
@@ -153,17 +141,38 @@ const removeMember = async (req, res) => {
   // Validate whether params.id is in the user's boards or not
   const validate = req.user.boards.filter((board) => board === req.params.id);
   if (!validate)
-    return res
-      .status(400)
-      .send({
-        errMessage:
-          "You can not remove member to this board, you are not a member or owner!",
-      });
+    return res.status(400).send({
+      errMessage:
+        "You can not remove member to this board, you are not a member or owner!",
+    });
   const { boardId, memberId } = req.params;
   // Call the service
   await boardService.removeMember(
     boardId,
     memberId,
+    req.user,
+    (err, result) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send(result);
+    }
+  );
+};
+
+const changeRoleMember = async (req, res) => {
+  // Validate whether params.id is in the user's boards or not
+  const validate = req.user.boards.filter((board) => board === req.params.id);
+  if (!validate)
+    return res.status(400).send({
+      errMessage:
+        "You can not change role of this member, you are not a member or owner!",
+    });
+  const { boardId, memberId } = req.params;
+  const { role } = req.body;
+  // Call the service
+  await boardService.changeRoleMember(
+    boardId,
+    memberId,
+    role,
     req.user,
     (err, result) => {
       if (err) return res.status(400).send(err);
@@ -182,4 +191,5 @@ module.exports = {
   updateBackground,
   addMember,
   removeMember,
+  changeRoleMember,
 };

@@ -56,6 +56,15 @@ const boardSlice = createSlice({
         (member) => member.user !== memberId
       );
     },
+    changeRoleMember: (state, action) => {
+      const { memberId, role } = action.payload;
+      state.members = state.members.map((member) => {
+        if (member.user === memberId) {
+          return { ...member, role: role };
+        }
+        return member;
+      });
+    },
   },
 });
 
@@ -69,5 +78,6 @@ export const {
   updateBackground,
   addMembers,
   removeMember,
+  changeRoleMember,
 } = boardSlice.actions;
 export default boardSlice.reducer;

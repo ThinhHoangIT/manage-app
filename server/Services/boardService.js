@@ -266,6 +266,46 @@ const removeMember = async (id, memberId, user, callback) => {
   }
 };
 
+const changeRoleMember = async (id, memberId, role, user, callback) => {
+  try {
+    // Get models
+    const board = await boardModel.findById(id);
+    const member = await userModel.findById(memberId);
+
+    // Find the member in the board
+    const memberIndex = board.members.findIndex(
+      (member) => member.user.toString() === memberId.toString()
+    );
+
+    if (memberIndex === -1) {
+      return callback({
+        message: "Member not found in this board",
+      });
+    }
+
+    // Change member's role in board
+    board.members[memberIndex].role = role;
+
+    // Add to board activity
+    board.activity.push({
+      user: user.id,
+      name: user.name,
+      action: `changed role of user ${member.name} in this board to '${role}'`,
+      color: user.color,
+    });
+
+    // Save changes
+    await board.save();
+
+    return callback(false, { memberId: memberId, role: role });
+  } catch (error) {
+    return callback({
+      message: "Something went wrong",
+      details: error.message,
+    });
+  }
+};
+
 module.exports = {
   create,
   getAll,
@@ -276,4 +316,5 @@ module.exports = {
   updateBackground,
   addMember,
   removeMember,
+  changeRoleMember,
 };

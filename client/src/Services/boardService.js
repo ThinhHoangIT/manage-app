@@ -14,6 +14,7 @@ import {
   updateActivity,
   updateBackground,
   updateDescription,
+  changeRoleMember,
 } from "../Redux/Slices/boardSlice";
 
 const listRoute = "https://trello.cyclic.app/list";
@@ -202,6 +203,41 @@ export const boardMemberRemove = async (boardId, memberId, dispatch) => {
     dispatch(
       openAlert({
         message: "Members are removed to this board successfully",
+        severity: "success",
+      })
+    );
+  } catch (error) {
+    dispatch(
+      openAlert({
+        message: error?.response?.data?.errMessage
+          ? error.response.data.errMessage
+          : error.message,
+        severity: "error",
+      })
+    );
+  }
+};
+
+export const boardRoleMemberChange = async (
+  boardId,
+  memberId,
+  role,
+  dispatch
+) => {
+  try {
+    dispatch(changeRoleMember({ memberId, role }));
+    submitCall = submitCall.then(() =>
+      axios.put(
+        boardRoute + "/" + boardId + "/" + memberId + "/change-role-member",
+        {
+          role: role,
+        }
+      )
+    );
+    await submitCall;
+    dispatch(
+      openAlert({
+        message: "Change member's role successfully",
         severity: "success",
       })
     );
