@@ -13,7 +13,7 @@ import {
 } from "../Redux/Slices/userSlice";
 import { openAlert } from "../Redux/Slices/alertSlice";
 import setBearer from "../Utils/setBearer";
-const baseUrl = "https://trello.cyclic.app/user/";
+const baseUrl = "https://shiny-toad-gabardine.cyclic.app/user/";
 
 export const register = async (
   { name, surname, email, password, repassword },

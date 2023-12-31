@@ -256,6 +256,10 @@ const listSlice = createSlice({
                 if (list._id.toString() === checklistId.toString()) {
                   list.items = list.items.map((item) => {
                     if (item._id.toString() === checklistItemId.toString()) {
+                      // Ensure item.members is initialized
+                      if (!item.members) {
+                        item.members = [];
+                      }
                       item.members.unshift({
                         user: memberId,
                         name: memberName,

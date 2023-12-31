@@ -57,7 +57,7 @@ import {
   updateStartDueDatesOfCard,
 } from "../Redux/Slices/listSlice";
 
-const baseUrl = "https://trello.cyclic.app/card";
+const baseUrl = "https://shiny-toad-gabardine.cyclic.app/card";
 let submitCall = Promise.resolve();
 
 export const getCard = async (cardId, listId, boardId, dispatch) => {
@@ -861,27 +861,6 @@ export const checklistItemMemberAdd = async (
   dispatch
 ) => {
   try {
-    dispatch(
-      addMemberChecklistItem({
-        checklistId,
-        checklistItemId,
-        memberId,
-        memberName,
-        memberColor,
-      })
-    );
-    dispatch(
-      addMemberChecklistItemOfCard({
-        listId,
-        cardId,
-        checklistId,
-        checklistItemId,
-        memberId,
-        memberName,
-        memberColor,
-      })
-    );
-
     submitCall = submitCall.then(() =>
       axios.post(
         baseUrl +
@@ -902,7 +881,29 @@ export const checklistItemMemberAdd = async (
       )
     );
     await submitCall;
+
+    dispatch(
+      addMemberChecklistItem({
+        checklistId,
+        checklistItemId,
+        memberId,
+        memberName,
+        memberColor,
+      })
+    );
+    dispatch(
+      addMemberChecklistItemOfCard({
+        listId,
+        cardId,
+        checklistId,
+        checklistItemId,
+        memberId,
+        memberName,
+        memberColor,
+      })
+    );
   } catch (error) {
+    console.log(error);
     dispatch(
       openAlert({
         message: error?.response?.data?.errMessage
