@@ -57,7 +57,7 @@ import {
   updateStartDueDatesOfCard,
 } from "../Redux/Slices/listSlice";
 
-const baseUrl = "https://shiny-toad-gabardine.cyclic.app/card";
+const baseUrl = "https://manage-app-bzb4.onrender.com/card";
 let submitCall = Promise.resolve();
 
 export const getCard = async (cardId, listId, boardId, dispatch) => {

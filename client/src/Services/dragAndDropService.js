@@ -5,7 +5,7 @@ import {
 } from "../Redux/Slices/listSlice";
 import { openAlert } from "../Redux/Slices/alertSlice";
 
-const baseUrl = "https://shiny-toad-gabardine.cyclic.app/list";
+const baseUrl = "https://manage-app-bzb4.onrender.com/list";
 
 //  Create promise to queue requests
 let submitCall = Promise.resolve();

@@ -6,7 +6,7 @@ import {
   deleteCard,
 } from "../Redux/Slices/listSlice";
 
-const baseUrl = "https://shiny-toad-gabardine.cyclic.app/card";
+const baseUrl = "https://manage-app-bzb4.onrender.com/card";
 
 export const createCard = async (title, listId, boardId, dispatch) => {
   dispatch(setLoading(true));

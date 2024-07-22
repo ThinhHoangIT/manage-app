@@ -13,7 +13,7 @@ import {
 } from "../Redux/Slices/userSlice";
 import { openAlert } from "../Redux/Slices/alertSlice";
 import setBearer from "../Utils/setBearer";
-const baseUrl = "https://shiny-toad-gabardine.cyclic.app/user/";
+const baseUrl = "https://manage-app-bzb4.onrender.com/user/";
 
 export const register = async (
   { name, surname, email, password, repassword },

@@ -14,7 +14,7 @@ import {
   successFetchingBoard,
   updateTitle,
 } from "../Redux/Slices/boardSlice";
-const baseUrl = "https://shiny-toad-gabardine.cyclic.app/board";
+const baseUrl = "https://manage-app-bzb4.onrender.com/board";
 
 export const getBoards = async (fromDropDown, dispatch) => {
   if (!fromDropDown) dispatch(startFetchingBoards());

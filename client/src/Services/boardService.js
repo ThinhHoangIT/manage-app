@@ -17,8 +17,8 @@ import {
   changeRoleMember,
 } from "../Redux/Slices/boardSlice";
 
-const listRoute = "https://shiny-toad-gabardine.cyclic.app/list";
-const boardRoute = "https://shiny-toad-gabardine.cyclic.app/board";
+const listRoute = "https://manage-app-bzb4.onrender.com/list";
+const boardRoute = "https://manage-app-bzb4.onrender.com/board";
 let submitCall = Promise.resolve();
 
 export const getLists = async (boardId, dispatch) => {
